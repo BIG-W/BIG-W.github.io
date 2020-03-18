@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>数字枚举法</title>
+      <link href="/2020/03/18/%E6%95%B0%E5%AD%97%E6%9E%9A%E4%B8%BE%E6%B3%95/"/>
+      <url>/2020/03/18/%E6%95%B0%E5%AD%97%E6%9E%9A%E4%B8%BE%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<h1 id="数字枚举法"><a href="#数字枚举法" class="headerlink" title="数字枚举法"></a>数字枚举法</h1><h2 id="输入一串数字寻找相同数字个数，数字大小值等问题"><a href="#输入一串数字寻找相同数字个数，数字大小值等问题" class="headerlink" title="输入一串数字寻找相同数字个数，数字大小值等问题"></a>输入一串数字寻找相同数字个数，数字大小值等问题</h2><p>枚举法看似很难，其实就是最简单的对<strong>一串连续数字***</strong>求余***，下面例子说明 ##</p><p>1.求个数问题(只给出关键部分)</p><pre><code>`     long long A;     int a,tep=0;     scanf(&quot;%lld%d&quot;,&amp;A,&amp;a);     while(A != 0)     {        if (A % 10 == a)    {        tep++;    }    A = A / 10;        }`</code></pre><p>2.求相同数字相加问题等</p><pre><code>`int Da; long long A,Pa;    scanf(&quot;%lld%d&quot;,&amp;A,&amp;Da); while (A != 0){  if (A % 10 == Da)  {      Pa = Pa + Da;  }  A = A / 10;}`</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+          <category> 枚举法例子 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C基础杂段</title>
       <link href="/2020/03/17/C%E5%9F%BA%E7%A1%80%E6%9D%82%E6%AE%B5/"/>
       <url>/2020/03/17/C%E5%9F%BA%E7%A1%80%E6%9D%82%E6%AE%B5/</url>
