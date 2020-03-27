@@ -31,18 +31,18 @@
     
     
     <entry>
-      <title>A + B</title>
-      <link href="/2020/03/18/A+B/"/>
-      <url>/2020/03/18/A+B/</url>
+      <title>数字枚举法</title>
+      <link href="/2020/03/18/%E6%95%B0%E5%AD%97%E6%9E%9A%E4%B8%BE%E6%B3%95/"/>
+      <url>/2020/03/18/%E6%95%B0%E5%AD%97%E6%9E%9A%E4%B8%BE%E6%B3%95/</url>
       
-        <content type="html"><![CDATA[<p>在基础算法中,A+B类的题型很常见，从最基础普通到各类变种，考察的知识点也各不相同，下面将依次举例</p><ol><li><strong>基础型（A+B和C）</strong></li></ol><p>给定区间 [−2<br>​31<br>​​ ,2<br>​31<br>​​ ] 内的 3 个整数 A、B 和 C，请判断 A+B 是否大于 C。<br>输入格式：</p><p>输入第 1 行给出正整数 T (≤10)，是测试用例的个数。随后给出 T 组测试用例，每组占一行，顺序给出 A、B 和 C。整数间以空格分隔。</p><p>输出格式：</p><p>对每组测试用例，在一行中输出 Case #X: true 如果 A+B&gt;C，否则输出 Case #X: false，其中 X 是测试用例的编号（从 1 开始）。</p><p>输入样例：</p><p>4</p><p>1 2 3</p><p>2 3 4</p><p>2147483647 0 2147483646</p><p>0 -2147483648 -2147483647</p><p>输出样例：</p><p>Case #1: false</p><p>Case #2: true</p><p>Case #3: true</p><p>Case #4: false</p><p>对于此类题型，无需思考，直接硬解，唯一考虑的是<strong>变量的取值范围</strong>，<strong>int</strong> 取值范围 <strong>-2的31次方~2的31次方-1</strong>  也就是大概在<strong>-2×10的9次方~2×10的9次方</strong><br><strong>long long</strong> 取值范围 <strong>-2的63次方~2的63次方-1</strong>  大概在<strong>-9×10的18次方~9×10的18次方</strong><br>代码如下：</p><pre><code>`#include &lt;stdio.h&gt; long long A, B, C; int main(){int T, tep=1;scanf(&quot;%d&quot;,&amp;T);for(int i=0;i&lt;T;i++){    scanf(&quot;%lld%lld%lld&quot;,&amp;A,&amp;B,&amp;C);    if (A + B &gt; C)    {        printf(&quot;Case #%d: true\n&quot;, tep++);    }    else    {        printf(&quot;Case #%d: false\n&quot;, tep++);    }}return 0; }`</code></pre><p>2.<strong>变种型（A + B 和 C （64bit））</strong></p><p>Given three integers A, B and C in [−2<br>​63<br>​​ ,2<br>​63<br>​​ ], you are supposed to tell whether A+B&gt;C.</p><p>Input Specification:</p><p>The first line of the input gives the positive number of test cases, T (≤10). Then T test cases follow, each consists of a single line containing three integers A, B and C, separated by single spaces.</p><p>Output Specification:</p><p>For each test case, output in one line Case #X: true if A+B&gt;C, or Case #X: false otherwise, where X is the case number (starting from 1).</p><p>Sample Input:</p><p>3</p><p>1 2 3</p><p>2 3 4</p><p>9223372036854775807 -9223372036854775808 0</p><p>Sample Output:</p><p>Case #1: false</p><p>Case #2: true</p><p>Case #3: false</p><p>此题则需要考虑<strong>两数之和是否溢出</strong>问题，此时重点便是<strong>两个正数之和等于负数或是两个负数之和等于正数，便是溢出</strong>，这一点也是笔者学习后知道的…  这一点在计算机组成原理中有说明， 怪我自己没学好。<br>①.A+B&gt;=2的63次方，结果A+B&gt;C肯定成立，但相加后的结果肯定会正溢出，而正溢出值得区间为[-2的63次方，-2]<br>②.A+B&lt;-2的63次方，A+B&lt;C肯定成立，同理会负溢出，负溢出区间[0,2的63次方]<br>全部结果的输出，则用bool代替，true,false.</p><p>代码如下：</p><pre><code>`#include &lt;stdio.h&gt; #define true 1 #define false 0int main(){int n;bool flag;int tep = 1;scanf(&quot;%d&quot;, &amp;n);for (int i=0;i&lt;n;i++){    long long a, b, c,res;    scanf(&quot;%ld%ld%ld&quot;,&amp;a,&amp;b,&amp;c);    res = a + b;    if (a &gt; 0 &amp;&amp; b &gt; 0 &amp;&amp; res &lt; 0) { flag = 1; }    else if (a &lt; 0 &amp;&amp; b &lt; 0 &amp;&amp; res&gt;=0) { flag = 0; }    else if (a + b &gt; c) { flag = 1; }    else  flag = 0;     if (flag == 1) {        printf(&quot;Case #%d: true&quot;, tep++);    }    else        printf(&quot;Case #%d: false&quot;,tep++);}return 0;}`</code></pre><p>3.<strong>类似型（A+B）</strong></p><p>此类型借用A+B为载体，做其他运算，具体例子在<strong><a href="http://https://www.big-w.cn/2020/03/18/%E6%95%B0%E5%AD%97%E6%9E%9A%E4%B8%BE%E6%B3%95/" target="_blank" rel="noopener">http://https://www.big-w.cn/2020/03/18/%E6%95%B0%E5%AD%97%E6%9E%9A%E4%B8%BE%E6%B3%95/</a></strong>   此处不再过多说明，具体就是 <strong>枚举法</strong>的应用</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="数字枚举法"><a href="#数字枚举法" class="headerlink" title="数字枚举法"></a>数字枚举法</h1><h2 id="输入一串数字寻找相同数字个数，数字大小值等问题"><a href="#输入一串数字寻找相同数字个数，数字大小值等问题" class="headerlink" title="输入一串数字寻找相同数字个数，数字大小值等问题"></a>输入一串数字寻找相同数字个数，数字大小值等问题</h2><p>枚举法看似很难，其实就是最简单的对<strong>一串连续数字***</strong>求余***，下面例子说明 ##</p><p>1.求个数问题(只给出关键部分)</p><pre><code>`     long long A;     int a,tep=0;     scanf(&quot;%lld%d&quot;,&amp;A,&amp;a);     while(A != 0)     {        if (A % 10 == a)    {        tep++;    }    A = A / 10;        }`</code></pre><p>2.求相同数字相加问题等</p><pre><code>`int Da; long long A,Pa;    scanf(&quot;%lld%d&quot;,&amp;A,&amp;Da); while (A != 0){  if (A % 10 == Da)  {      Pa = Pa + Da;  }  A = A / 10;}`</code></pre>]]></content>
       
       
       <categories>
           
           <category> 算法 </category>
           
-          <category> A + B </category>
+          <category> 枚举法例子 </category>
           
       </categories>
       
@@ -58,18 +58,18 @@
     
     
     <entry>
-      <title>数字枚举法</title>
-      <link href="/2020/03/18/%E6%95%B0%E5%AD%97%E6%9E%9A%E4%B8%BE%E6%B3%95/"/>
-      <url>/2020/03/18/%E6%95%B0%E5%AD%97%E6%9E%9A%E4%B8%BE%E6%B3%95/</url>
+      <title>A + B</title>
+      <link href="/2020/03/18/A+B/"/>
+      <url>/2020/03/18/A+B/</url>
       
-        <content type="html"><![CDATA[<h1 id="数字枚举法"><a href="#数字枚举法" class="headerlink" title="数字枚举法"></a>数字枚举法</h1><h2 id="输入一串数字寻找相同数字个数，数字大小值等问题"><a href="#输入一串数字寻找相同数字个数，数字大小值等问题" class="headerlink" title="输入一串数字寻找相同数字个数，数字大小值等问题"></a>输入一串数字寻找相同数字个数，数字大小值等问题</h2><p>枚举法看似很难，其实就是最简单的对<strong>一串连续数字***</strong>求余***，下面例子说明 ##</p><p>1.求个数问题(只给出关键部分)</p><pre><code>`     long long A;     int a,tep=0;     scanf(&quot;%lld%d&quot;,&amp;A,&amp;a);     while(A != 0)     {        if (A % 10 == a)    {        tep++;    }    A = A / 10;        }`</code></pre><p>2.求相同数字相加问题等</p><pre><code>`int Da; long long A,Pa;    scanf(&quot;%lld%d&quot;,&amp;A,&amp;Da); while (A != 0){  if (A % 10 == Da)  {      Pa = Pa + Da;  }  A = A / 10;}`</code></pre>]]></content>
+        <content type="html"><![CDATA[<p>在基础算法中,A+B类的题型很常见，从最基础普通到各类变种，考察的知识点也各不相同，下面将依次举例</p><ol><li><strong>基础型（A+B和C）</strong></li></ol><p>给定区间 [−2<br>​31<br>​​ ,2<br>​31<br>​​ ] 内的 3 个整数 A、B 和 C，请判断 A+B 是否大于 C。<br>输入格式：</p><p>输入第 1 行给出正整数 T (≤10)，是测试用例的个数。随后给出 T 组测试用例，每组占一行，顺序给出 A、B 和 C。整数间以空格分隔。</p><p>输出格式：</p><p>对每组测试用例，在一行中输出 Case #X: true 如果 A+B&gt;C，否则输出 Case #X: false，其中 X 是测试用例的编号（从 1 开始）。</p><p>输入样例：</p><p>4</p><p>1 2 3</p><p>2 3 4</p><p>2147483647 0 2147483646</p><p>0 -2147483648 -2147483647</p><p>输出样例：</p><p>Case #1: false</p><p>Case #2: true</p><p>Case #3: true</p><p>Case #4: false</p><p>对于此类题型，无需思考，直接硬解，唯一考虑的是<strong>变量的取值范围</strong>，<strong>int</strong> 取值范围 <strong>-2的31次方~2的31次方-1</strong>  也就是大概在<strong>-2×10的9次方~2×10的9次方</strong><br><strong>long long</strong> 取值范围 <strong>-2的63次方~2的63次方-1</strong>  大概在<strong>-9×10的18次方~9×10的18次方</strong><br>代码如下：</p><pre><code>`#include &lt;stdio.h&gt; long long A, B, C; int main(){int T, tep=1;scanf(&quot;%d&quot;,&amp;T);for(int i=0;i&lt;T;i++){    scanf(&quot;%lld%lld%lld&quot;,&amp;A,&amp;B,&amp;C);    if (A + B &gt; C)    {        printf(&quot;Case #%d: true\n&quot;, tep++);    }    else    {        printf(&quot;Case #%d: false\n&quot;, tep++);    }}return 0; }`</code></pre><p>2.<strong>变种型（A + B 和 C （64bit））</strong></p><p>Given three integers A, B and C in [−2<br>​63<br>​​ ,2<br>​63<br>​​ ], you are supposed to tell whether A+B&gt;C.</p><p>Input Specification:</p><p>The first line of the input gives the positive number of test cases, T (≤10). Then T test cases follow, each consists of a single line containing three integers A, B and C, separated by single spaces.</p><p>Output Specification:</p><p>For each test case, output in one line Case #X: true if A+B&gt;C, or Case #X: false otherwise, where X is the case number (starting from 1).</p><p>Sample Input:</p><p>3</p><p>1 2 3</p><p>2 3 4</p><p>9223372036854775807 -9223372036854775808 0</p><p>Sample Output:</p><p>Case #1: false</p><p>Case #2: true</p><p>Case #3: false</p><p>此题则需要考虑<strong>两数之和是否溢出</strong>问题，此时重点便是<strong>两个正数之和等于负数或是两个负数之和等于正数，便是溢出</strong>，这一点也是笔者学习后知道的…  这一点在计算机组成原理中有说明， 怪我自己没学好。<br>①.A+B&gt;=2的63次方，结果A+B&gt;C肯定成立，但相加后的结果肯定会正溢出，而正溢出值得区间为[-2的63次方，-2]<br>②.A+B&lt;-2的63次方，A+B&lt;C肯定成立，同理会负溢出，负溢出区间[0,2的63次方]<br>全部结果的输出，则用bool代替，true,false.</p><p>代码如下：</p><pre><code>`#include &lt;stdio.h&gt; #define true 1 #define false 0int main(){int n;bool flag;int tep = 1;scanf(&quot;%d&quot;, &amp;n);for (int i=0;i&lt;n;i++){    long long a, b, c,res;    scanf(&quot;%ld%ld%ld&quot;,&amp;a,&amp;b,&amp;c);    res = a + b;    if (a &gt; 0 &amp;&amp; b &gt; 0 &amp;&amp; res &lt; 0) { flag = 1; }    else if (a &lt; 0 &amp;&amp; b &lt; 0 &amp;&amp; res&gt;=0) { flag = 0; }    else if (a + b &gt; c) { flag = 1; }    else  flag = 0;     if (flag == 1) {        printf(&quot;Case #%d: true&quot;, tep++);    }    else        printf(&quot;Case #%d: false&quot;,tep++);}return 0;}`</code></pre><p>3.<strong>类似型（A+B）</strong></p><p>此类型借用A+B为载体，做其他运算，具体例子在<strong><a href="http://https://www.big-w.cn/2020/03/18/%E6%95%B0%E5%AD%97%E6%9E%9A%E4%B8%BE%E6%B3%95/" target="_blank" rel="noopener">http://https://www.big-w.cn/2020/03/18/%E6%95%B0%E5%AD%97%E6%9E%9A%E4%B8%BE%E6%B3%95/</a></strong>   此处不再过多说明，具体就是 <strong>枚举法</strong>的应用</p>]]></content>
       
       
       <categories>
           
           <category> 算法 </category>
           
-          <category> 枚举法例子 </category>
+          <category> A + B </category>
           
       </categories>
       
