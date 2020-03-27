@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>数组的善用</title>
+      <link href="/2020/03/27/%E6%95%B0%E7%BB%84%E7%9A%84%E5%96%84%E7%94%A8/"/>
+      <url>/2020/03/27/%E6%95%B0%E7%BB%84%E7%9A%84%E5%96%84%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<h1 id="所以例题均来自PAT的题库"><a href="#所以例题均来自PAT的题库" class="headerlink" title="所以例题均来自PAT的题库"></a>所以例题均来自PAT的题库</h1><p><a href="https://www.patest.cn/" target="_blank" rel="noopener" title="PAT题库">https://www.patest.cn/</a></p><p>直接上例题</p><p><strong>一</strong></p><p>输入两个非负 10 进制整数 A 和 B (≤2<br>​30<br>​​ −1)，输出 A+B 的 D (1&lt;D≤10)进制数。</p><p>输入格式：</p><p>输入在一行中依次给出 3 个整数 A、B 和 D。</p><p>输出格式：</p><p>输出 A+B 的 D 进制数。</p><p>输入样例：</p><p>123 456 8</p><p>输出样例：</p><p>1103</p><p><strong>思路</strong>： 1.十进制如何转化为其他进制？</p><p>对基取余法</p><p>123+456=579</p><p>579%8=72  ····3</p><p>72%8=9   ·····0</p><p>9%8=1   ·····1</p><p>1%8=0   ·····1</p><p>2.如何才能输出余数，采用数组存储，进行从低位到高位的枚举，最后再从高位到低位进行输出</p><pre><code>`#include &lt;stdio.h&gt; int main(){int A, B, D,sum=0;scanf(&quot;%d%d%d&quot;, &amp;A, &amp;B, &amp;D);sum = A + B;int a[31], num = 0;do{    a[num++] = sum%D;    sum = sum / D;} while (sum != 0);for (int i = num-1; i &gt;= 0; i--){    printf(&quot;%d&quot;, a[i]);}return 0;}`</code></pre><p><strong>二</strong></p><p>让我们用字母 B 来表示“百”、字母 S 表示“十”，用 12…n 来表示不为零的个位数字 n（&lt;10），换个格式来输出任一个不超过 3 位的正整数。例如 234 应该被输出为 BBSSS1234，因为它有 2 个“百”、3 个“十”、以及个位的 4。</p><p>输入格式：</p><p>每个测试输入包含 1 个测试用例，给出正整数 n（&lt;1000）。</p><p>输出格式：</p><p>每个测试用例的输出占一行，用规定的格式输出 n。</p><p>输入样例 1：</p><p>234</p><p>输出样例 1：</p><p>BBSSS1234</p><p>输入样例 2：</p><p>23</p><p>输出样例 2：</p><p>SS123</p><p><strong>思路：</strong>对测试例求余用数组保存，从高位到低位进行枚举输出</p><pre><code>`#include &lt;stdio.h&gt; int main(){int n;int a[5], num = 0;scanf(&quot;%d&quot;, &amp;n);while (n != 0){    a[num] = n % 10;    num++;    n = n / 10;}for (int i=num-1;i&gt;=0;i--){    if (i == 2)    {        for (int j = 0; j &lt; a[i]; j++)            printf(&quot;B&quot;);    }    else if (i == 1) {        for (int j = 0; j &lt; a[i]; j++)            printf(&quot;S&quot;);    }    else        for (int j = 1; j &lt;=a[i]; j++)        {            printf(&quot;%d&quot;,j);        }}return 0;}`</code></pre><p><strong>三</strong></p><p>给定一个 k 位整数 N=d<br>​k−1<br>​​ 10<br>​k−1<br>​​ +⋯+d<br>​1<br>​​ 10<br>​1<br>​​ +d<br>​0<br>​​  (0≤d<br>​i<br>​​ ≤9, i=0,⋯,k−1, d<br>​k−1<br>​​ &gt;0)，请编写程序统计每种不同的个位数字出现的次数。例如：给定 N=100311，则有 2 个 0，3 个 1，和 1 个 3。</p><p>输入格式：</p><p>每个输入包含 1 个测试用例，即一个不超过 1000 位的正整数 N。</p><p>输出格式：</p><p>对 N 中每一种不同的个位数字，以 D:M 的格式在一行中输出该位数字 D 及其在 N 中出现的次数 M。要求按 D 的升序输出。</p><p>输入样例：</p><p>100311</p><p>输出样例：</p><p>0:2</p><p>1:3</p><p>3:1</p><p><strong>思路：</strong></p><p>1.以字符数组形式存储数据，记录长度</p><p>2采用字符相减，字符相减等同于ASCII的相减，由于输入例都是int， a[0]-‘0’=1</p><p>3采用枚举从低到高输出</p><pre><code>`#include &lt;stdio.h&gt; #include &lt;string.h&gt; int main(){char c[1010];scanf(&quot;%s&quot;,c);int len = strlen(c);int a[10] = { 0 };for (int i = 0; i &lt; len; i++){    a[c[i] - &apos;0&apos;]++;}for (int i = 0; i &lt; 10; i++){    if (a[i] != 0)    {        printf(&quot;%d:%d\n&quot;, i, a[i]);    }}return 0;}`</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+          <category> 善用数组 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 白岩松 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>A + B</title>
       <link href="/2020/03/18/A+B/"/>
       <url>/2020/03/18/A+B/</url>
